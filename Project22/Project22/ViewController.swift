@@ -87,6 +87,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 self.distanceReading.text = "RIGHT HERE"
                 
             }
+        }
     }
     
     // If we receive any beacons from location manager, take the first one and use its proximity property and pass it to updateDistance to update the app UI, otherwise use 'unknown'
