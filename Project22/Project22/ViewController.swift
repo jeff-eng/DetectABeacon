@@ -88,5 +88,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 
             }
     }
+    
+    // If we receive any beacons from location manager, take the first one and use its proximity property and pass it to updateDistance to update the app UI, otherwise use 'unknown'
+    func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
+        if beacons.count > 0 {
+            let beacon = beacons[0]
+            updateDistance(beacon.proximity)
+        } else {
+            updateDistance(.Unknown)
+        }
+    }
 }
 
