@@ -38,9 +38,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         if status == .AuthorizedWhenInUse {
             // Here it checks if device is able to monitor iBeacons
             if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
-                // Checks if ranging(ability to tell how far something else is away from device) is available
+                // Only start scanning for beacons when we have permission and if device is able to do so
                 if CLLocationManager.isRangingAvailable() {
-                    // do stuff here in this code block
+                    startScanning()
                 }
             }
         }
@@ -56,6 +56,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.startMonitoringForRegion(beaconRegion)
         // beacon region gets passed into location manager to start measuring distance between iDevice and beacon
         locationManager.startRangingBeaconsInRegion(beaconRegion)
+    }
+    
+    // Method to change the label's text and color depending on proximity from beacon. The cases within Switch statement come from the CLProximity class which has an enum with those cases
+    func updateDistance(distance: CLProximity) {
+        UIView.animateWithDuration(0.8) { [unowned self] in
+            switch distance {
+            case .Unknown:
+                // set background color to gray
+                self.view.backgroundColor = UIColor.grayColor()
+                // set text to "UNKNOWN"
+                self.distanceReading.text = "UNKNOWN"
+                
+            case .Far:
+                // set background color to blue
+                self.view.backgroundColor = UIColor.blueColor()
+                // set text to "FAR"
+                self.distanceReading.text = "FAR"
+                
+            case .Near:
+                // set background color to orange
+                self.view.backgroundColor = UIColor.orangeColor()
+                // set text to "NEAR"
+                self.distanceReading.text = "NEAR"
+                
+            case .Immediate:
+                // set background color to red
+                self.view.backgroundColor = UIColor.redColor()
+                // set text to "RIGHT HERE"
+                self.distanceReading.text = "RIGHT HERE"
+                
+            }
     }
 }
 
