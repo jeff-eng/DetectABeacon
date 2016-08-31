@@ -30,7 +30,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+       
     }
 
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -46,5 +46,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
 
+    func startScanning() {
+        // create a unique identifier string
+        let uuid = NSUUID(UUIDString: "5A4BCFCE-174E-4BAC-A814-092E77F6B7E5")
+        // uniquely identify beacon and pass major & minor numbers into CLBeaconRegion class
+        let beaconRegion = CLBeaconRegion(proximityUUID: uuid!, major: 123, minor: 456, identifier: "MyBeacon")
+        
+        // beacon region gets passed into location manager to monitor for existence of region
+        locationManager.startMonitoringForRegion(beaconRegion)
+        // beacon region gets passed into location manager to start measuring distance between iDevice and beacon
+        locationManager.startRangingBeaconsInRegion(beaconRegion)
+    }
 }
 
